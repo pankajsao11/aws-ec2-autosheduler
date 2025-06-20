@@ -47,3 +47,23 @@ resource "aws_cloudwatch_log_group" "cloudwatch_logs" {
   log_group_class   = "STANDARD"
   retention_in_days = 14
 }
+
+/*
+│ Error: creating IAM Role (lambda-ec2-role): operation error IAM: CreateRole, https response error StatusCode: 400, RequestID: 6a32e9ec-5e37-4240-86db-1f24bf531a73, MalformedPolicyDocument: Unknown field statement
+│
+│   with aws_iam_role.lambda_role,
+│   on lambda.tf line 1, in resource "aws_iam_role" "lambda_role":
+│    1: resource "aws_iam_role" "lambda_role" {
+│
+
+assume_role_policy = jsonencode({
+    version = "2012-10-17"
+    statement = [{
+      Effect = "Allow"
+      Principal = {
+        Service = "lambda.amazonaws.com"
+      }
+      Action = "sts:AssumeRole"
+    }]
+  })
+*/
