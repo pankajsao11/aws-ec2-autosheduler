@@ -1,25 +1,17 @@
 # lambda-ec2-orchestrator
 For scheduling EC2 instances Start/Stop using lambda and cloudwatch events (eventsbridge).
 
-
 ![image](https://github.com/user-attachments/assets/7f819bd9-39a6-450c-84d9-7879676564cd)
 
+## Method 2: Amazon EventBridge with AWS Lambda 
+This method offers more flexibility but requires some coding.
 
+a. Create a Lambda function:
 
-│ Error: creating IAM Role (lambda-ec2-role): operation error IAM: CreateRole, https response error StatusCode: 400, RequestID: 6a32e9ec-5e37-4240-86db-1f24bf531a73, MalformedPolicyDocument: Unknown field statement
-│
-│   with aws_iam_role.lambda_role,
-│   on lambda.tf line 1, in resource "aws_iam_role" "lambda_role":
-│    1: resource "aws_iam_role" "lambda_role" {
-│
+Open the AWS Lambda console: https://console.aws.amazon.com/lambda/ 
+Create a new function and write code to stop EC2 instances
 
-assume_role_policy = jsonencode({
-    version = "2012-10-17"
-    statement = [{
-      Effect = "Allow"
-      Principal = {
-        Service = "lambda.amazonaws.com"
-      }
-      Action = "sts:AssumeRole"
-    }]
-  })
+b. Set up an EventBridge schedule:
+Open the Amazon EventBridge console: https://console.aws.amazon.com/events/ 
+Create a new rule with a cron expression (e.g., "0 0 * * ? *" for midnight every day)
+Set the Lambda function as the target for this rule
