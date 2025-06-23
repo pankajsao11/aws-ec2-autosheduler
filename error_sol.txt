@@ -43,3 +43,13 @@ or remove the existing statement.
 │   82: resource "aws_lambda_permission" "allow_stop_scheduler" {
 sol: AllowExecutionFromScheduler was in both start and stop, modified it to:
 AllowExecutionFromStartScheduler and AllowExecutionFromStopScheduler
+
+#{
+  "errorMessage": "'InstanceID'",
+  "errorType": "KeyError",
+  "requestId": "0246da88-68b1-4521-b784-72b8da41e411",
+  "stackTrace": [
+    "  File \"/var/task/ec2_lambda.py\", line 28, in lambda_handler\n    instance_ids.append(instance['InstanceID'])\n"
+  ]
+}
+sol: InstanceID > InstancId (small d)
