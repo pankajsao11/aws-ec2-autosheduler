@@ -1,0 +1,73 @@
+timestamp,message
+1750488216427,"INIT_START Runtime Version: python:3.13.v45	Runtime Version ARN: arn:aws:lambda:us-east-1::runtime:1c3b07a0dd0601e71b0292c41581cb633e076ad4eb3b0408ebe3d708418bd1b8
+"
+1750488216725,"START RequestId: de2ecff8-d8c9-4c10-bf5c-275ce1c609f2 Version: $LATEST
+"
+1750488219806,"END RequestId: de2ecff8-d8c9-4c10-bf5c-275ce1c609f2
+"
+1750488219806,"REPORT RequestId: de2ecff8-d8c9-4c10-bf5c-275ce1c609f2	Duration: 3000.00 ms	Billed Duration: 3000 ms	Memory Size: 128 MB	Max Memory Used: 94 MB	Init Duration: 294.24 ms	Status: timeout
+"
+1750488225238,"START RequestId: 19685653-c074-422b-b8c7-0d9d71610dbd Version: $LATEST
+"
+1750488227824,"[WARNING]	2025-06-21T06:43:47.824Z	19685653-c074-422b-b8c7-0d9d71610dbd	LAMBDA_WARNING: Unhandled exception. The most likely cause is an issue in the function code. However, in rare cases, a Lambda runtime update can cause unexpected function behavior. For functions using managed runtimes, runtime updates can be triggered by a function change, or can be applied automatically. To determine if the runtime has been updated, check the runtime version in the INIT_START log entry. If this error correlates with a change in the runtime version, you may be able to mitigate this error by temporarily rolling back to the previous runtime version. For more information, see https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html
+"
+1750488227824,"[ERROR] ClientError: An error occurred (UnauthorizedOperation) when calling the DescribeInstances operation: You are not authorized to perform this operation. User: arn:aws:sts::211125590785:assumed-role/ec2-setup-role-xh2i7v3c/ec2-setup is not authorized to perform: ec2:DescribeInstances because no identity-based policy allows the ec2:DescribeInstances action
+Traceback (most recent call last):
+  File ""/var/task/lambda_function.py"", line 19, in lambda_handler
+    response = ec2.describe_instances(Filters=filters)
+  File ""/var/lang/lib/python3.13/site-packages/botocore/client.py"", line 569, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File ""/var/lang/lib/python3.13/site-packages/botocore/client.py"", line 1023, in _make_api_call
+    raise error_class(parsed_response, operation_name)"
+1750488227845,"END RequestId: 19685653-c074-422b-b8c7-0d9d71610dbd
+"
+1750488227845,"REPORT RequestId: 19685653-c074-422b-b8c7-0d9d71610dbd	Duration: 2801.63 ms	Billed Duration: 2802 ms	Memory Size: 128 MB	Max Memory Used: 95 MB	
+"
+1750488397457,"START RequestId: d8685655-2850-477b-8944-e7e1205b8690 Version: $LATEST
+"
+1750488398004,"[WARNING]	2025-06-21T06:46:38.004Z	d8685655-2850-477b-8944-e7e1205b8690	LAMBDA_WARNING: Unhandled exception. The most likely cause is an issue in the function code. However, in rare cases, a Lambda runtime update can cause unexpected function behavior. For functions using managed runtimes, runtime updates can be triggered by a function change, or can be applied automatically. To determine if the runtime has been updated, check the runtime version in the INIT_START log entry. If this error correlates with a change in the runtime version, you may be able to mitigate this error by temporarily rolling back to the previous runtime version. For more information, see https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html
+"
+1750488398004,"[ERROR] ClientError: An error occurred (UnauthorizedOperation) when calling the DescribeInstances operation: You are not authorized to perform this operation. User: arn:aws:sts::211125590785:assumed-role/ec2-setup-role-xh2i7v3c/ec2-setup is not authorized to perform: ec2:DescribeInstances because no identity-based policy allows the ec2:DescribeInstances action
+Traceback (most recent call last):
+  File ""/var/task/lambda_function.py"", line 19, in lambda_handler
+    response = ec2.describe_instances(Filters=filters)
+  File ""/var/lang/lib/python3.13/site-packages/botocore/client.py"", line 569, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File ""/var/lang/lib/python3.13/site-packages/botocore/client.py"", line 1023, in _make_api_call
+    raise error_class(parsed_response, operation_name)"
+1750488398025,"END RequestId: d8685655-2850-477b-8944-e7e1205b8690
+"
+1750488398025,"REPORT RequestId: d8685655-2850-477b-8944-e7e1205b8690	Duration: 567.23 ms	Billed Duration: 568 ms	Memory Size: 128 MB	Max Memory Used: 95 MB	
+"
+1750488454177,"START RequestId: d8685655-2850-477b-8944-e7e1205b8690 Version: $LATEST
+"
+1750488454944,"[WARNING]	2025-06-21T06:47:34.943Z	d8685655-2850-477b-8944-e7e1205b8690	LAMBDA_WARNING: Unhandled exception. The most likely cause is an issue in the function code. However, in rare cases, a Lambda runtime update can cause unexpected function behavior. For functions using managed runtimes, runtime updates can be triggered by a function change, or can be applied automatically. To determine if the runtime has been updated, check the runtime version in the INIT_START log entry. If this error correlates with a change in the runtime version, you may be able to mitigate this error by temporarily rolling back to the previous runtime version. For more information, see https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html
+"
+1750488454944,"[ERROR] ClientError: An error occurred (UnauthorizedOperation) when calling the DescribeInstances operation: You are not authorized to perform this operation. User: arn:aws:sts::211125590785:assumed-role/ec2-setup-role-xh2i7v3c/ec2-setup is not authorized to perform: ec2:DescribeInstances because no identity-based policy allows the ec2:DescribeInstances action
+Traceback (most recent call last):
+  File ""/var/task/lambda_function.py"", line 19, in lambda_handler
+    response = ec2.describe_instances(Filters=filters)
+  File ""/var/lang/lib/python3.13/site-packages/botocore/client.py"", line 569, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File ""/var/lang/lib/python3.13/site-packages/botocore/client.py"", line 1023, in _make_api_call
+    raise error_class(parsed_response, operation_name)"
+1750488454965,"END RequestId: d8685655-2850-477b-8944-e7e1205b8690
+"
+1750488454965,"REPORT RequestId: d8685655-2850-477b-8944-e7e1205b8690	Duration: 786.97 ms	Billed Duration: 787 ms	Memory Size: 128 MB	Max Memory Used: 95 MB	
+"
+1750488589147,"START RequestId: d8685655-2850-477b-8944-e7e1205b8690 Version: $LATEST
+"
+1750488589685,"[WARNING]	2025-06-21T06:49:49.685Z	d8685655-2850-477b-8944-e7e1205b8690	LAMBDA_WARNING: Unhandled exception. The most likely cause is an issue in the function code. However, in rare cases, a Lambda runtime update can cause unexpected function behavior. For functions using managed runtimes, runtime updates can be triggered by a function change, or can be applied automatically. To determine if the runtime has been updated, check the runtime version in the INIT_START log entry. If this error correlates with a change in the runtime version, you may be able to mitigate this error by temporarily rolling back to the previous runtime version. For more information, see https://docs.aws.amazon.com/lambda/latest/dg/runtimes-update.html
+"
+1750488589685,"[ERROR] ClientError: An error occurred (UnauthorizedOperation) when calling the DescribeInstances operation: You are not authorized to perform this operation. User: arn:aws:sts::211125590785:assumed-role/ec2-setup-role-xh2i7v3c/ec2-setup is not authorized to perform: ec2:DescribeInstances because no identity-based policy allows the ec2:DescribeInstances action
+Traceback (most recent call last):
+  File ""/var/task/lambda_function.py"", line 19, in lambda_handler
+    response = ec2.describe_instances(Filters=filters)
+  File ""/var/lang/lib/python3.13/site-packages/botocore/client.py"", line 569, in _api_call
+    return self._make_api_call(operation_name, kwargs)
+  File ""/var/lang/lib/python3.13/site-packages/botocore/client.py"", line 1023, in _make_api_call
+    raise error_class(parsed_response, operation_name)"
+1750488589705,"END RequestId: d8685655-2850-477b-8944-e7e1205b8690
+"
+1750488589705,"REPORT RequestId: d8685655-2850-477b-8944-e7e1205b8690	Duration: 557.15 ms	Billed Duration: 558 ms	Memory Size: 128 MB	Max Memory Used: 95 MB	
+"

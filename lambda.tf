@@ -19,13 +19,57 @@ resource "aws_iam_role" "lambda_role" {
   }
 }
 
-resource "aws_iam_policy_attachment" "lambda_ec2_attach" {
-  name       = "lambda-ec2-policy-attach"
-  roles      = [aws_iam_role.lambda_role.name]
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+resource "aws_iam_policy" "lambda_policy" {
+  name        = "Lambda-execution-policy"
+  description = "Lambda execution policy for ec2 and cloudwatch"
+  policy = jsonencode(
+    {
+      Version = "2012-10-17"
+      Statement = [
+        {
+          Effect = "Allow"
+          Action = [
+            "ec2:DescribeInstances",
+            "ec2:StartInstances",
+            "ec2:StopInstances"
+          ]
+          Resource = "*"
+        },
+        {
+          Effect = "Allow"
+          Action = [
+            "logs:CreateLogGroup"
+          ]
+          Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
+        },
+        {
+          Effect = "Allow"
+          Action = [
+            "logs:CreatLogStream",
+            "logs:PutLogEvents"
+          ]
+          Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${aws_lambda_function.ec2_lambda.function_name}:*"
+        },
+        {
+          Effect = "Allow"
+          Action = [
+            "lambda:InvokeFunction"
+          ]
+          Resource = [
+            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${aws_lambda_function.ec2_lambda.function_name}",
+            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${aws_lambda_function.ec2_lambda.function_name}:*"
+          ]
+        }
+      ]
+    }
+  )
+}
+resource "aws_iam_role_policy_attachment" "lambda_ec2_attach" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = aws_iam_policy.lambda_policy.arn
 }
 
-##the handler specifies the entry point of your Lambda function. It typically follows the format filename.function_name. 
+##the handler specifies the entry point of your Lambda function. It typically follows the format "filename.function_name". 
 
 resource "aws_lambda_function" "ec2_lambda" {
   description      = "Lambda function for EC2 Scheduler"
@@ -36,6 +80,15 @@ resource "aws_lambda_function" "ec2_lambda" {
   role             = aws_iam_role.lambda_role.arn
   filename         = "ec2_lambda.zip"
   source_code_hash = filebase64sha256("ec2_lambda.zip")
+  timeout          = 30
+
+  environment {
+    variables = {
+      TAG_KEY   = "AutoSchedule"
+      TAG_VALUE = "True"
+      REGION    = "us-east-1"
+    }
+  }
 
   logging_config {
     log_format = "JSON"
@@ -48,22 +101,3 @@ resource "aws_cloudwatch_log_group" "cloudwatch_logs" {
   retention_in_days = 14
 }
 
-/*
-│ Error: creating IAM Role (lambda-ec2-role): operation error IAM: CreateRole, https response error StatusCode: 400, RequestID: 6a32e9ec-5e37-4240-86db-1f24bf531a73, MalformedPolicyDocument: Unknown field statement
-│
-│   with aws_iam_role.lambda_role,
-│   on lambda.tf line 1, in resource "aws_iam_role" "lambda_role":
-│    1: resource "aws_iam_role" "lambda_role" {
-│
-
-assume_role_policy = jsonencode({
-    version = "2012-10-17"
-    statement = [{
-      Effect = "Allow"
-      Principal = {
-        Service = "lambda.amazonaws.com"
-      }
-      Action = "sts:AssumeRole"
-    }]
-  })
-*/

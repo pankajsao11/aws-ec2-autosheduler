@@ -1,13 +1,12 @@
 #data block to fetch latest ami of linux/ubuntu os in primary region
 data "aws_ami" "linux_Server_pr" {
-  #provider           = aws.primary
   owners             = ["amazon"]
   most_recent        = true
   include_deprecated = false
 
   filter {
     name   = "name"
-    values = ["ubuntu-pro-minimal*"]
+    values = ["ubuntu-pro-fips-*"]
   }
 
   filter {
@@ -33,3 +32,7 @@ data "aws_subnet" "selected" {
 data "aws_security_group" "selected" {
   id = var.security_group
 }
+
+data "aws_caller_identity" "current" {}
+
+data "aws_region" "current" {}

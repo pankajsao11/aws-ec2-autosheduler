@@ -1,0 +1,45 @@
+#Error: creating Auto Scaling Group (auto-scaling-ec2): operation error Auto Scaling: CreateAutoScalingGroup, https response error StatusCode: 400, RequestID: 3dd26f45-509c-4709-bb56-b9c4523ec3f9, api error ValidationError: You must use a valid fully-formed launch template. The t2.micro instance type does not support an AMI with a boot 
+mode of UEFI. Only instance types built on the Nitro System support UEFI. Specify an instance type that supports 
+UEFI, and try again.
+│
+│   with aws_autoscaling_group.asg,
+│   on asg.tf line 7, in resource "aws_autoscaling_group" "asg":
+│    7: resource "aws_autoscaling_group" "asg" {
+│
+sol: the "ubuntu-pro-* or ubuntu-pro-minimal-*" ami's were having boot type with UEFI which is not supported in t2.micro Instances
+Therefore on using "ubuntu-pro-fips-*" ami in data.aws_ami it was having boot mode>legacy-bios.
+
+
+# Error: "policy" contains an invalid JSON policy: not a JSON object
+│
+│   with aws_iam_policy.event_policy,
+│   on cw_events.tf line 29, in resource "aws_iam_policy" "event_policy":
+│   29:   policy      = aws_iam_policy.lambda_policy.arn
+sol: here in policy it should have been json object but I was by mistake passing policy arn
+
+
+# Error: creating EventBridge Rule (start-ec2-daily): operation error EventBridge: PutRule, https response error 
+StatusCode: 400, RequestID: 7cdd3656-c7a2-4273-9316-0dd334eb1968, api error ValidationException: Provided role 'arn:aws:iam::211125590785:role/eventbridge-role' cannot be assumed by principal 'events.amazonaws.com'.
+│
+│   with aws_cloudwatch_event_rule.start_event,
+│   on cw_events.tf line 32, in resource "aws_cloudwatch_event_rule" "start_event":
+│   32: resource "aws_cloudwatch_event_rule" "start_event" {
+
+│ Error: creating EventBridge Rule (stop-ec2-daily): operation error EventBridge: PutRule, https response error StatusCode: 400, RequestID: 5129eaf1-d7a7-4aae-97f4-2bbaa045b258, api error ValidationException: Provided role 'arn:aws:iam::211125590785:role/eventbridge-role' cannot be assumed by principal 'events.amazonaws.com'.
+│
+│   with aws_cloudwatch_event_rule.stop_event,
+│   on cw_events.tf line 54, in resource "aws_cloudwatch_event_rule" "stop_event":
+│   54: resource "aws_cloudwatch_event_rule" "stop_event" {
+
+Sol: The policy which I was using was for "EventBridge Scheduler" > Scheduler.amazonaws.com
+but the resource was for aws eventbridge only. Hence need to modify resource block accordingly
+
+
+# Error: adding Lambda Permission (ec2-scheduler/AllowExecutionFromScheduler): operation error Lambda: AddPermission, https response error StatusCode: 409, RequestID: 2cf9178c-23fe-4112-a1b9-14ded7e3639b, ResourceConflictException: The statement id (AllowExecutionFromScheduler) provided already exists. Please provide a new statement id, 
+or remove the existing statement.
+│
+│   with aws_lambda_permission.allow_stop_scheduler,
+│   on cw_events.tf line 82, in resource "aws_lambda_permission" "allow_stop_scheduler":
+│   82: resource "aws_lambda_permission" "allow_stop_scheduler" {
+sol: AllowExecutionFromScheduler was in both start and stop, modified it to:
+AllowExecutionFromStartScheduler and AllowExecutionFromStopScheduler
