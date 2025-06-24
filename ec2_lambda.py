@@ -3,45 +3,41 @@ import os
 
 def lambda_handler(event, context):
     action = event.get('action', '').lower()
-    '''This Python expression commonly used to handle dictionary data structures.
-    Here's what's happening:
--   event.get('action', ''): The get() method retrieves the value associated with the key 'action' from the dictionary event. If 'action' is not a key in the dictionary (or its value is None), it returns the default value specified as the second parameter—an empty string ('') in this case.'''
-    
     tag_key = os.environ.get('TAG_KEY', 'AutoSchedule')
     tag_value = os.environ.get('TAG_VALUE', 'True')
     regions = os.environ.get('REGIONS', 'us-east-1').split(',')
 
     for region in regions:
         ec2 = boto3.client('ec2', region_name=region)
-
+        
         #filter instance by tag
         filters = [{
             'Name': f'tag:{tag_key}',
-            'Values': [tag_value]
+            'Values': [tag_value] 
         }]
 
         response = ec2.describe_instances(Filters=filters)
+
         instance_ids = []
-    
         for reservation in response['Reservations']:
             for instance in reservation['Instances']:
-                instance_ids.append(instance['InstanceID'])
-             
-        if not instance_ids:
-            print(f'No Instances with Tag {tag_key} = {tag_value} found in region {region}.')
-            continue
-        
-        #perform action
-        if action == 'start':
-            print(f'Starting Instances in {region}: {instance_ids}')
-            ec2.start_instances(Instance_Ids=instance_ids)
+                instance_ids.append(instance['InstanceId'])
 
-        elif action == "stop":
-            print(f'Stopping Instance in {region}: {instance_ids}')
-            ec2.stop_instances(Instance_Ids=instance_ids)
-        
+        if not instance_ids:
+            print(f"No instances with tag {tag_key}={tag_value} found in region {region}.")
+            continue
+
+        # Perform action
+        if action == 'start':
+            print(f"Starting instances in {region}: {instance_ids}")
+            ec2.start_instances(InstanceIds=instance_ids)
+
+        elif action == 'stop':
+            print(f"Stopping instances in {region}: {instance_ids}")
+            ec2.stop_instances(InstanceIds=instance_ids)
+
         else:
-            print(f'Invalid action: {action}')
+            print(f"Invalid action: {action}")
 
 '''
 #code explanation:

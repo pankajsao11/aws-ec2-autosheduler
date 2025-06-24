@@ -31,6 +31,7 @@ resource "aws_iam_role_policy_attachment" "event_role_attachment" {
 # Scheduled Start
 resource "aws_scheduler_schedule" "start_schedule" {
   name       = "start-ec2-schedule"
+  description = "AutoStart of EC2 instances"
   group_name = "default"
 
   flexible_time_window {
@@ -38,6 +39,7 @@ resource "aws_scheduler_schedule" "start_schedule" {
   }
 
   schedule_expression = "cron(35 23 * * ? *)" # 8 AM daily
+  schedule_expression_timezone = "Asia/Kolkata"
 
   target {
     arn      = aws_lambda_function.ec2_lambda.arn
@@ -52,13 +54,15 @@ resource "aws_scheduler_schedule" "start_schedule" {
 # Scheduled Stop
 resource "aws_scheduler_schedule" "stop_schedule" {
   name       = "stop-ec2-schedule"
+  description = "AutoStop of EC2 instances"
   group_name = "default"
 
   flexible_time_window {
     mode = "OFF"
   }
 
-  schedule_expression = "cron(52 23 * * ? *)" # 10 PM daily
+  schedule_expression = "cron(35 22 * * ? *)" # 10 PM daily
+  schedule_expression_timezone = "Asia/Kolkata"
 
   target {
     arn      = aws_lambda_function.ec2_lambda.arn

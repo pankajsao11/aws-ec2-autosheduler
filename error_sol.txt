@@ -53,3 +53,25 @@ AllowExecutionFromStartScheduler and AllowExecutionFromStopScheduler
   ]
 }
 sol: InstanceID > InstancId (small d)
+
+#Lambda Error
+{
+    "timestamp": "2025-06-23T18:06:57Z",
+    "log_level": "ERROR",
+    "errorMessage": "Parameter validation failed:\nMissing required parameter in input: \"InstanceIds\"\nUnknown parameter in input: \"Instance_Ids\", must be one of: InstanceIds, Hibernate, DryRun, Force",
+    "errorType": "ParamValidationError",
+    "requestId": "7ff243b0-839f-47b0-bc9f-9f9c9a3bf26e",
+    "stackTrace": [
+        "  File \"/var/task/ec2_lambda.py\", line 41, in lambda_handler\n    ec2.stop_instances(Instance_Ids=instance_ids)\n",
+        "  File \"/var/lang/lib/python3.12/site-packages/botocore/client.py\", line 569, in _api_call\n    return self._make_api_call(operation_name, kwargs)\n",
+        "  File \"/var/lang/lib/python3.12/site-packages/botocore/client.py\", line 980, in _make_api_call\n    request_dict = self._convert_to_request_dict(\n",
+        "  File \"/var/lang/lib/python3.12/site-packages/botocore/client.py\", line 1047, in _convert_to_request_dict\n    request_dict = self._serializer.serialize_to_request(\n",
+        "  File \"/var/lang/lib/python3.12/site-packages/botocore/validate.py\", line 381, in serialize_to_request\n    raise ParamValidationError(report=report.generate_report())\n"
+    ]
+}
+sol: "Missing required parameter in input: \"InstanceIds\""
+"Unknown parameter in input: \"Instance_Ids\""
+
+ec2.stop_instances(Instance_Ids=instance_ids) => ec2.stop_instances(InstanceIds=instance_ids)
+For ec2.stop_instances() and ec2.start_instances(), the only valid input key for instance IDs is:
+InstanceIds=[ "i-0abc123...", "i-0def456..."]
