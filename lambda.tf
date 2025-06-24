@@ -45,7 +45,7 @@ resource "aws_iam_policy" "lambda_policy" {
         {
           Effect = "Allow"
           Action = [
-            "logs:CreatLogStream",
+            "logs:CreateLogStream",
             "logs:PutLogEvents"
           ]
           Resource = "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:log-group:/aws/lambda/${aws_lambda_function.ec2_lambda.function_name}:*"
@@ -56,8 +56,8 @@ resource "aws_iam_policy" "lambda_policy" {
             "lambda:InvokeFunction"
           ]
           Resource = [
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${aws_lambda_function.ec2_lambda.function_name}",
-            "arn:aws:logs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${aws_lambda_function.ec2_lambda.function_name}:*"
+            "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${aws_lambda_function.ec2_lambda.function_name}",
+            "arn:aws:lambda:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:function:${aws_lambda_function.ec2_lambda.function_name}:*"
           ]
         }
       ]
