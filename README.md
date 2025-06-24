@@ -62,3 +62,11 @@ Checking cloudTrail to verify by which user/role it was executed
 ![image](https://github.com/user-attachments/assets/55a4c860-1b89-4d8a-bfc1-d76dacf83512)
 
 ![image](https://github.com/user-attachments/assets/d7b8b5af-1e69-4b02-a8be-d08dd718184c)
+
+AutoScaling Launch:
+
+![image](https://github.com/user-attachments/assets/bbfa0b74-5e33-418f-9d2e-fa24f126657a)
+
+CloudWatch LogStream:
+
+![image](https://github.com/user-attachments/assets/bce96834-4bcc-4e4f-b0e1-ba01b3759e12)
