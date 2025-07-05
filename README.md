@@ -46,6 +46,14 @@ IAM Role:
 EventBridge Policy for the role:
 ![image](https://github.com/user-attachments/assets/90d8ba77-6093-46f9-a81b-4b7c452b640d)
 
+SNS topic/Subscription:
+![image](https://github.com/user-attachments/assets/e451dd91-d850-4718-bbd2-e6330a66d36a)
+
+![image](https://github.com/user-attachments/assets/0c80f1ae-1ef6-445c-8247-59f766933137)
+
+Eventbridge rule:
+![image](https://github.com/user-attachments/assets/9b0eb19c-b3cc-40c4-93d1-b3bbec726b45)
+
 Final result After execution of the Cron job
 For EC2 Stop:
 
