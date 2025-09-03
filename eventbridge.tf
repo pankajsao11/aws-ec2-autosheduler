@@ -39,6 +39,7 @@ resource "aws_scheduler_schedule" "start_schedule" {
   }
 
   schedule_expression          = "cron(35 21 * * ? *)" # 8 AM daily
+  #Minute (0-59), Hour (0-23), Day of Month (1-31), Month (1-12), Day of Week (0-7 where both 0 and 7 represent Sunday), year
   schedule_expression_timezone = "Asia/Kolkata"
 
   target {
